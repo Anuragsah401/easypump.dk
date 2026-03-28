@@ -11,7 +11,7 @@ export default function Hero() {
             to="/buy"
             className="inline-flex items-center justify-center rounded-xl bg-blue-500 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 hover:bg-blue-600 hover:shadow-xl hover:-translate-y-1 transform transition-all"
           >
-            I want to Buy a bike
+            I want to Buy a refurbished bike
           </Link>
           <a
             href="#sell"
