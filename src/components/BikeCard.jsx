@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { HiOutlineMapPin, HiOutlineCheckCircle } from "react-icons/hi2";
 
 export default function BikeCard({ bike }) {
   return (
@@ -31,42 +32,13 @@ export default function BikeCard({ bike }) {
         <div className="flex items-center gap-3 text-xs text-gray-500">
           {/* Location */}
           <span className="flex items-center gap-1">
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-              />
-            </svg>
+            <HiOutlineMapPin className="w-3.5 h-3.5" />
             {bike.location}
           </span>
 
           {/* Condition */}
           <span className="flex items-center gap-1">
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+            <HiOutlineCheckCircle className="w-3.5 h-3.5" />
             {bike.condition}
           </span>
 

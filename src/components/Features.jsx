@@ -1,81 +1,31 @@
+import {
+  HiOutlineMagnifyingGlass,
+  HiOutlineShieldCheck,
+  HiOutlineBolt,
+  HiOutlineMapPin,
+} from "react-icons/hi2";
+
 const features = [
   {
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-        />
-      </svg>
-    ),
+    icon: <HiOutlineMagnifyingGlass className="w-6 h-6" />,
     title: "Smart Search",
     description:
       "Find bikes by brand, model, size, price, and location. Our advanced filters make it effortless.",
   },
   {
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
-        />
-      </svg>
-    ),
+    icon: <HiOutlineShieldCheck className="w-6 h-6" />,
     title: "Secure Payments",
     description:
       "Integrated payments with buyer protection. Transactions are safe, fast, and transparent.",
   },
   {
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
-        />
-      </svg>
-    ),
+    icon: <HiOutlineBolt className="w-6 h-6" />,
     title: "Instant Listings",
     description:
       "Snap a few photos, add details, and your bike is live in under a minute. It's that easy.",
   },
   {
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-        />
-      </svg>
-    ),
+    icon: <HiOutlineMapPin className="w-6 h-6" />,
     title: "Local Meetups",
     description:
       "Browse bikes near you and arrange safe, local meetups. No long-distance shipping hassles.",

@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { HiOutlineBars3, HiOutlineXMark, HiOutlineUserCircle } from "react-icons/hi2";
 import LocationSelector from "./LocationSelector";
 
 export default function Navbar({ location, onLocationChange }) {
   const { pathname } = useLocation();
-  const showLocation = pathname !== "/";
+  const isDashboard = pathname.startsWith("/dashboard");
+  const showLocation =
+    pathname !== "/" && pathname !== "/signin" && pathname !== "/signup" && !isDashboard;
   const isLanding = pathname === "/";
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -29,35 +32,42 @@ export default function Navbar({ location, onLocationChange }) {
             {/* Right side — desktop */}
             {isLanding ? (
               <div className="flex items-center gap-4">
-                <a
-                  href="#login"
+                <Link
+                  to="/signup"
                   className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
                 >
-                  Sign in
-                </a>
-                <a
-                  href="#login"
+                  Sign up
+                </Link>
+                <Link
+                  to="/signin"
                   className="text-sm font-semibold text-gray-900 border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors"
                 >
                   Login
-                </a>
+                </Link>
               </div>
             ) : (
               <>
                 {/* Desktop links */}
                 <div className="hidden md:flex items-center gap-4">
-                  <a
-                    href="#login"
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    <HiOutlineUserCircle className="w-5 h-5" />
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/signup"
                     className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
                   >
-                    Sign in
-                  </a>
-                  <a
-                    href="#login"
+                    Sign up
+                  </Link>
+                  <Link
+                    to="/signin"
                     className="text-sm font-semibold text-gray-900 border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors"
                   >
                     Login
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Hamburger button — mobile only */}
@@ -67,29 +77,9 @@ export default function Navbar({ location, onLocationChange }) {
                   aria-label="Menu"
                 >
                   {menuOpen ? (
-                    <svg
-                      className="w-5 h-5 text-gray-700"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <HiOutlineXMark className="w-5 h-5 text-gray-700" />
                   ) : (
-                    <svg
-                      className="w-5 h-5 text-gray-700"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                      />
-                    </svg>
+                    <HiOutlineBars3 className="w-5 h-5 text-gray-700" />
                   )}
                 </button>
               </>
@@ -108,20 +98,27 @@ export default function Navbar({ location, onLocationChange }) {
           />
           <div className="fixed top-16 left-0 right-0 z-50 md:hidden border-t border-gray-100 bg-white shadow-xl">
             <div className="px-6 py-4 space-y-3">
-              <a
-                href="#login"
+              <Link
+                to="/dashboard"
+                onClick={() => setMenuOpen(false)}
+                className="block text-sm font-semibold text-center text-blue-600 bg-blue-50 border border-blue-100 rounded-lg px-4 py-2.5 hover:bg-blue-100 transition-colors"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/signup"
                 onClick={() => setMenuOpen(false)}
                 className="block text-sm font-semibold text-center text-gray-900 border border-gray-300 rounded-lg px-4 py-2.5 hover:bg-gray-50 transition-colors"
               >
-                Sign in
-              </a>
-              <a
-                href="#login"
+                Sign up
+              </Link>
+              <Link
+                to="/signin"
                 onClick={() => setMenuOpen(false)}
                 className="block text-sm font-semibold text-center text-gray-900 border border-gray-300 rounded-lg px-4 py-2.5 hover:bg-gray-50 transition-colors"
               >
                 Login
-              </a>
+              </Link>
             </div>
           </div>
         </>

@@ -20,12 +20,12 @@ export default function Hero() {
           >
             I want to Buy a bike
           </Link>
-          <a
-            href="#sell"
+          <Link
+            to="/signin"
             className="inline-flex items-center justify-center rounded-xl bg-white px-8 py-3.5 text-sm font-semibold text-gray-700 border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all"
           >
             I want to Sell my bike
-          </a>
+          </Link>
         </div>
       </div>
     </section>

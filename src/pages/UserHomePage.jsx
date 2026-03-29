@@ -1,11 +1,13 @@
 import { useState, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
-import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
-import bikes, { brands, types } from "../data/bikes";
+import { useParams, useSearchParams } from "react-router-dom";
+import { HiOutlineMagnifyingGlass, HiOutlineMapPin, HiOutlineChevronDown } from "react-icons/hi2";
+import bikes, { brands, types, locations } from "../data/bikes";
 import BikeCard from "../components/BikeCard";
 
-export default function BuyPage({ location }) {
+export default function UserHomePage() {
+  const { userId } = useParams();
   const [searchParams] = useSearchParams();
+  const [location, setLocation] = useState("All Locations");
   const [brand, setBrand] = useState("All Brands");
   const [type, setType] = useState("All Types");
   const [sort, setSort] = useState("newest");
@@ -14,22 +16,15 @@ export default function BuyPage({ location }) {
   const filtered = useMemo(() => {
     let list = [...bikes];
 
-    // Filter by location
     if (location && location !== "All Locations") {
       list = list.filter((b) => b.location === location);
     }
-
-    // Filter by brand
     if (brand !== "All Brands") {
       list = list.filter((b) => b.brand === brand);
     }
-
-    // Filter by type
     if (type !== "All Types") {
       list = list.filter((b) => b.type === type);
     }
-
-    // Search
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter(
@@ -39,8 +34,6 @@ export default function BuyPage({ location }) {
           b.type.toLowerCase().includes(q),
       );
     }
-
-    // Sort
     if (sort === "price-low") list.sort((a, b) => a.price - b.price);
     if (sort === "price-high") list.sort((a, b) => b.price - a.price);
 
@@ -52,7 +45,9 @@ export default function BuyPage({ location }) {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">Buy a Bike</h1>
+          <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">
+            Browse the nearest bikes
+          </h1>
           <p className="mt-1 text-gray-500">
             {filtered.length} bike{filtered.length !== 1 && "s"} available
             {location && location !== "All Locations" && ` in ${location}`}
@@ -71,6 +66,23 @@ export default function BuyPage({ location }) {
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-9 pr-4 py-2.5 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all"
             />
+          </div>
+
+          {/* Location */}
+          <div className="relative">
+            <HiOutlineMapPin className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500" />
+            <HiOutlineChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+            <select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="appearance-none text-sm bg-white border border-gray-200 rounded-xl pl-9 pr-9 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 text-gray-600 cursor-pointer"
+            >
+              {locations.map((loc) => (
+                <option key={loc} value={loc}>
+                  {loc}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Brand filter */}
