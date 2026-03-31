@@ -6,10 +6,13 @@ import LocationSelector from "./LocationSelector";
 export default function Navbar({ location, onLocationChange }) {
   const { pathname } = useLocation();
   const isDashboard = pathname.startsWith("/dashboard");
-  const showLocation =
-    pathname !== "/" && pathname !== "/signin" && pathname !== "/signup" && !isDashboard;
+  const isAuthPage = pathname === "/signin" || pathname === "/signup";
+  const showLocation = pathname !== "/" && !isAuthPage && !isDashboard;
   const isLanding = pathname === "/";
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Show simple nav (just logo + auth links) on landing and auth pages
+  const showSimpleNav = isLanding || isAuthPage;
 
   return (
     <>
@@ -30,7 +33,7 @@ export default function Navbar({ location, onLocationChange }) {
             </div>
 
             {/* Right side — desktop */}
-            {isLanding ? (
+            {showSimpleNav ? (
               <div className="flex items-center gap-4">
                 <Link
                   to="/signup"
@@ -90,7 +93,7 @@ export default function Navbar({ location, onLocationChange }) {
         {/* Backdrop + Mobile dropdown menu — non-landing pages only */}
       </nav>
 
-      {!isLanding && menuOpen && (
+      {!showSimpleNav && menuOpen && (
         <>
           <div
             className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 md:hidden"
