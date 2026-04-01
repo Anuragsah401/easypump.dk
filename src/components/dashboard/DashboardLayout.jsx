@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useParams } from "react-router-dom";
 import {
   HiOutlineUser,
   HiOutlineRectangleStack,
@@ -8,15 +8,18 @@ import {
 } from "react-icons/hi2";
 import currentUser from "../../data/user";
 
-const navItems = [
-  { to: "/dashboard", icon: HiOutlineUser, label: "Profile", end: true },
-  { to: "/dashboard/listings", icon: HiOutlineRectangleStack, label: "My Listings" },
-  { to: "/dashboard/favorites", icon: HiOutlineHeart, label: "Favorites" },
-  { to: "/dashboard/messages", icon: HiOutlineChatBubbleLeftRight, label: "Messages" },
-  { to: "/dashboard/settings", icon: HiOutlineCog6Tooth, label: "Settings" },
-];
-
 export default function DashboardLayout() {
+  const { userId } = useParams();
+  const basePath = `/user/${userId}/dashboard`;
+
+  const navItems = [
+    { to: basePath, icon: HiOutlineUser, label: "Profile", end: true },
+    { to: `${basePath}/listings`, icon: HiOutlineRectangleStack, label: "My Listings" },
+    { to: `${basePath}/favorites`, icon: HiOutlineHeart, label: "Favorites" },
+    { to: `${basePath}/messages`, icon: HiOutlineChatBubbleLeftRight, label: "Messages" },
+    { to: `${basePath}/settings`, icon: HiOutlineCog6Tooth, label: "Settings" },
+  ];
+
   const unreadCount = currentUser.messages.filter((m) => m.unread).length;
 
   return (

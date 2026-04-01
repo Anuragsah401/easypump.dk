@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { HiOutlineEye, HiOutlineEyeSlash } from "react-icons/hi2";
+import { useAuth } from "../context/AuthContext";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -10,12 +11,25 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { login, getRedirectAfterLogin } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: wire up registration
-    console.log("Sign up:", { name, email, password });
-    navigate("/user/1");
+    // Mock signup - in real app, register with API
+    const userData = {
+      id: 1,
+      name: name,
+      email: email,
+    };
+    login(userData);
+
+    // Check if there's a redirect after login
+    const redirect = getRedirectAfterLogin();
+    if (redirect?.returnUrl) {
+      navigate(redirect.returnUrl);
+    } else {
+      navigate("/user/1");
+    }
   };
 
   return (

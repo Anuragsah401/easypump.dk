@@ -3,18 +3,32 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { HiOutlineEye, HiOutlineEyeSlash } from "react-icons/hi2";
+import { useAuth } from "../context/AuthContext";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { login, getRedirectAfterLogin } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: wire up real authentication
-    console.log("Sign in:", { email, password });
-    navigate("/user/1");
+    // Mock login - in real app, validate with API
+    const userData = {
+      id: 1,
+      name: "Test User",
+      email: email,
+    };
+    login(userData);
+
+    // Check if there's a redirect after login
+    const redirect = getRedirectAfterLogin();
+    if (redirect?.returnUrl) {
+      navigate(redirect.returnUrl);
+    } else {
+      navigate("/user/1");
+    }
   };
 
   return (

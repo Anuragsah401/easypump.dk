@@ -1,10 +1,47 @@
-import { useParams, Link } from "react-router-dom";
+import { useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { HiOutlineChevronLeft, HiOutlineMapPin, HiOutlineCheck } from "react-icons/hi2";
 import bikes from "../data/bikes";
+import { useAuth } from "../context/AuthContext";
+import ContactSellerModal from "../components/ContactSellerModal";
 
 export default function BikeDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { isLoggedIn, setRedirectAfterLogin, getRedirectAfterLogin } = useAuth();
+
+  // Check if we should open the contact modal after login redirect
+  const redirect = getRedirectAfterLogin();
+  const shouldOpenModal =
+    redirect?.action === "contact" && redirect?.bikeId === Number(id) && isLoggedIn;
+
+  const [showContactModal, setShowContactModal] = useState(shouldOpenModal);
+  const [messageSent, setMessageSent] = useState(false);
+
   const bike = bikes.find((b) => b.id === Number(id));
+
+  const handleContactClick = () => {
+    if (!isLoggedIn) {
+      // Store redirect info and go to login
+      setRedirectAfterLogin({
+        action: "contact",
+        bikeId: Number(id),
+        returnUrl: `/buy/${id}`,
+      });
+      navigate("/signin");
+    } else {
+      setShowContactModal(true);
+    }
+  };
+
+  const handleSendMessage = (message) => {
+    // In a real app, you would send this to your API
+    console.log("Message sent:", message);
+    setShowContactModal(false);
+    setMessageSent(true);
+    // Reset after 3 seconds
+    setTimeout(() => setMessageSent(false), 3000);
+  };
 
   if (!bike) {
     return (
@@ -126,12 +163,30 @@ export default function BikeDetailPage() {
             </div>
 
             {/* CTA */}
-            <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all cursor-pointer">
-              Contact Seller
-            </button>
+            {messageSent ? (
+              <div className="w-full bg-green-500 text-white font-semibold py-3.5 rounded-xl text-center">
+                ✓ Message Sent!
+              </div>
+            ) : (
+              <button
+                onClick={handleContactClick}
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all cursor-pointer"
+              >
+                Contact Seller
+              </button>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Contact Modal */}
+      {showContactModal && (
+        <ContactSellerModal
+          bike={bike}
+          onClose={() => setShowContactModal(false)}
+          onSend={handleSendMessage}
+        />
+      )}
     </div>
   );
 }

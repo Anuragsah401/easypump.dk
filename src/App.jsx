@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import DashboardNavbar from "./components/dashboard/DashboardNavbar";
@@ -8,6 +9,7 @@ import BuyPage from "./pages/BuyPage";
 import BikeDetailPage from "./pages/BikeDetailPage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
+import SignUpShopPage from "./pages/SignUpShopPage";
 import UserHomePage from "./pages/UserHomePage";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import ProfileSection from "./components/dashboard/ProfileSection";
@@ -19,9 +21,8 @@ import SettingsSection from "./components/dashboard/SettingsSection";
 function AppContent() {
   const [location, setLocation] = useState("All Locations");
   const { pathname } = useLocation();
-  const isDashboard = pathname.startsWith("/dashboard");
-  const isUserHome = pathname.startsWith("/user/");
-  const useAppNavbar = isDashboard || isUserHome;
+  const isUserRoute = pathname.startsWith("/user/");
+  const useAppNavbar = isUserRoute;
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -37,8 +38,9 @@ function AppContent() {
           <Route path="/buy/:id" element={<BikeDetailPage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/signup-shop" element={<SignUpShopPage />} />
           <Route path="/user/:userId" element={<UserHomePage />} />
-          <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route path="/user/:userId/dashboard" element={<DashboardLayout />}>
             <Route index element={<ProfileSection />} />
             <Route path="listings" element={<MyListingsSection />} />
             <Route path="favorites" element={<FavoritesSection />} />
@@ -55,7 +57,9 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </BrowserRouter>
   );
 }

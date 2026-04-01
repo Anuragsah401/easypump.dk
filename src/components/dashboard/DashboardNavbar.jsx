@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import {
   HiOutlineBars3,
   HiOutlineXMark,
@@ -13,17 +13,21 @@ const unreadCount = currentUser.messages.filter((m) => m.unread).length;
 
 export default function DashboardNavbar() {
   const { pathname } = useLocation();
+  const { userId } = useParams();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const basePath = `/user/${userId}/dashboard`;
 
   // Derive the current section name for the mobile header
   const sectionMap = {
-    "/dashboard": "Profile",
-    "/dashboard/listings": "My Listings",
-    "/dashboard/favorites": "Favorites",
-    "/dashboard/messages": "Messages",
-    "/dashboard/settings": "Settings",
+    [basePath]: "Profile",
+    [`${basePath}/listings`]: "My Listings",
+    [`${basePath}/favorites`]: "Favorites",
+    [`${basePath}/messages`]: "Messages",
+    [`${basePath}/settings`]: "Settings",
   };
-  const currentSection = sectionMap[pathname] || "Dashboard";
+  const currentSection =
+    sectionMap[pathname] || (pathname === `/user/${userId}` ? "Home" : "Dashboard");
 
   return (
     <>
@@ -61,7 +65,7 @@ export default function DashboardNavbar() {
 
               {/* User avatar + name */}
               <Link
-                to="/dashboard"
+                to={basePath}
                 className="flex items-center gap-2.5 pl-1 pr-3 py-1.5 rounded-xl hover:bg-gray-50 transition-colors"
               >
                 <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-xs">
