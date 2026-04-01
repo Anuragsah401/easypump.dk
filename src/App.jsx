@@ -12,6 +12,7 @@ import SignUpPage from "./pages/SignUpPage";
 import SignUpShopPage from "./pages/SignUpShopPage";
 import UserHomePage from "./pages/UserHomePage";
 import CreateListingPage from "./pages/CreateListingPage";
+import AirPumpPage from "./pages/AirPumpPage";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import ProfileSection from "./components/dashboard/ProfileSection";
 import MyListingsSection from "./components/dashboard/MyListingsSection";
@@ -41,6 +42,7 @@ function AppContent() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signup-shop" element={<SignUpShopPage />} />
           <Route path="/sell" element={<CreateListingPage />} />
+          <Route path="/air" element={<AirPumpPage />} />
           <Route path="/user/:userId" element={<UserHomePage />} />
           <Route path="/user/:userId/dashboard" element={<DashboardLayout />}>
             <Route index element={<ProfileSection />} />
